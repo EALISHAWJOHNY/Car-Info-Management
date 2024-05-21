@@ -711,7 +711,8 @@ INSERT INTO [dbo].[Car]
     </ul>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cphBody" runat="server">    
-    <asp:Label ID="SuccessMessage" runat="server" Text="" ForeColor="Green"></asp:Label>
+   <h2 class="text-center" style="margin-top:60px;">Create Car</h2>
+                <asp:Label ID="SuccessMessage" runat="server" Text="" ForeColor="Green" CssClass="float-end"></asp:Label>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
