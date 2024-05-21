@@ -675,6 +675,154 @@ INSERT INTO [dbo].[Car]
     </script>
 </asp:Content>
     
+--------------------------------------------------------------------------
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPageMenu.master" AutoEventWireup="true" CodeBehind="CreateCarinfoAdmin.aspx.cs" Inherits="CarInfoManagement.CreateCarinfoAdmin" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="cphSideNavItems" runat="server">
+    <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbardarkdropdownmenulink1" role="button" data-bs-toggle="dropdown" aria-expanded="false">Car Info</a>
+            <ul class="dropdown-menu" aria-labelledby="navbardarkdropdownmenulink1">
+                <li><a class="dropdown-item" href="CreateCarInfoAdmin.aspx">Add</a></li>
+                <li><a class="dropdown-item" href="UpdateCarAdmin.aspx">Update Car Info</a></li>
+                <li><a class="dropdown-item" href="ListCars.aspx">List</a></li>
+                <li><a class="dropdown-item" href="DeleteCar.aspx">Delete Car Info</a></li>
+            </ul>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardarkdropdownmenulink2" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Car Transmission Types</a>
+            <ul class="dropdown-menu" aria-labelledby="navbardarkdropdownmenulink2">
+                <li><a href="#">Add</a></li>
+                <li><a class="dropdown-item" href="#">Update</a></li>
+                <li><a class="dropdown-item" href="#">List</a></li>
+                <li><a class="dropdown-item" href="#">Delete</a></li>
+            </ul>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardarkdropdownmenulink3" role="button" data-bs-toggle="dropdown" aria-expanded="false">Car Types</a>
+            <ul class="dropdown-menu" aria-labelledby="navbardarkdropdownmenulink3">
+                <li><a class="dropdown-item" href="#">Add</a></li>
+                <li><a class="dropdown-item" href="#">Update</a></li>
+                <li><a class="dropdown-item" href="#">List</a></li>
+                <li><a class="dropdown-item" href="#">Delete</a></li>
+            </ul>
+        </li>
+    </ul>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="cphBody" runat="server">    
+    <asp:Label ID="SuccessMessage" runat="server" Text="" ForeColor="Green"></asp:Label>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h2 class="text-center" style="margin-top:60px;">Create Car</h2>
+                <div class="form-group">
+                    <table class="table">
+                        <tr>
+                            <td>
+                                <label id="lblManufactureId" for="ManufactureId" >Manufacturer</label>
+                            </td>
+                            <td>
+                                <asp:DropDownList ID="ddlManufactureId" CssClass="form-control" runat="server" OnSelectedIndexChanged="ManufactureId_SelectedIndexChanged" />
+                            </td>
+                            <td>
+                                &nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label id="lblModel" for="Model">Model</label>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="txtModel" runat="server" CssClass="form-control" OnTextChanged="Model_TextChanged" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label id="lblTypeId" for="TypeId">Type</label>
+                            </td>
+                            <td>
+                                <asp:DropDownList ID="ddlTypeId" runat="server" CssClass="form-control" OnSelectedIndexChanged="TypeId_SelectedIndexChanged" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label Id="lblEngine" for="Engine">Engine</label>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="txtEngine" runat="server" CssClass="form-control" OnTextChanged="Engine_TextChanged" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label id="lblBHP" for="BHP">BHP</label>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="txtBHP" runat="server" CssClass="form-control" OnTextChanged="BHP_TextChanged" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label id="lblTransmission" for="TransmissionTypeId">Transmission Type</label>
+                            </td>
+                            <td>
+                                <asp:DropDownList ID="ddlTransmissionTypeId" runat="server" CssClass="form-control" OnSelectedIndexChanged="TransmissionTypeId_SelectedIndexChanged" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="Mileage">Mileage</label>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="txtMileage" runat="server" CssClass="form-control" OnTextChanged="Mileage_TextChanged" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="Seats">Seats</label>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="txtSeats" runat="server" CssClass="form-control" OnTextChanged="Seats_TextChanged" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="AirBagDetails">Airbag Details</label>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="txtAirBagDetails" runat="server" CssClass="form-control" OnTextChanged="AirBagDetails_TextChanged" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="BootsSpace">Boot Space</label>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="txtBootsSpace" runat="server" CssClass="form-control" OnTextChanged="BootsSpace_TextChanged" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="Price">Showroom Price</label>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="txtPrice" runat="server" CssClass="form-control" OnTextChanged="Price_TextChanged" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <asp:Button ID="btnCreateButton" runat="server" Text="Create" CssClass="btn btn-primary" OnClick="CreateButton_Click" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>                            
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</asp:Content>
 
 
 
