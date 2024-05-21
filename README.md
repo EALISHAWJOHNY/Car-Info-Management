@@ -539,5 +539,44 @@ BEGIN
     INSERT INTO Car (CarId, ManufacturerId, CarTypeId, TransmissiontypeID, ManufacturerName, Model, Type, Engine, BHP, Transmission, Mileage, Seats, AirBagDetails, BootSpace, Price)
     VALUES (@CarId, @ManufacturerId, @CarTypeId, @TransmissiontypeID, @ManufacturerName, @Model, @Type, @Engine, @BHP, @Transmission, @Mileage, @Seats, @AirBagDetails, @BootSpace, @Price);
 END
+------------------------------
+USE [CIMSPROJECT]
+GO
+
+INSERT INTO [dbo].[Car]
+           ([CarId]
+           ,[ManufacturerId]
+           ,[CarTypeId]
+           ,[TransmissionTypeId]
+           ,[ManufacturerName]
+           ,[Model]
+           ,[Type]
+           ,[Engine]
+           ,[BHP]
+           ,[Transmission]
+           ,[Mileage]
+           ,[Seat]
+           ,[AirBagDetails]
+           ,[BootSpace]
+           ,[Price])
+     VALUES
+           (<CarId, int,>
+           ,<ManufacturerId, int,>
+           ,<CarTypeId, int,>
+           ,<TransmissionTypeId, int,>
+           ,<ManufacturerName, nvarchar(255),>
+           ,<Model, nvarchar(255),>
+           ,<Type, nvarchar(50),>
+           ,<Engine, char(4),>
+           ,<BHP, int,>
+           ,<Transmission, nvarchar(50),>
+           ,<Mileage, int,>
+           ,<Seat, int,>
+           ,<AirBagDetails, nvarchar(255),>
+           ,<BootSpace, int,>
+           ,<Price, decimal(18,2),>)
+GO
+
+
 
 
