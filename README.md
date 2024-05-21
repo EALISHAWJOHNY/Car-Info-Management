@@ -573,10 +573,8 @@ INSERT INTO [dbo].[Car]
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-RX8tVZWlpIFXvsIUTzy1I1FbGlpDi9l0r6mVFTGOYsOUtHe+WmB+6o3Jz6S9krHb" crossorigin="anonymous">
-
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css" />
-
     <style>
         #btnSearch {
             /* Add custom styles for the search button if needed */
@@ -597,7 +595,7 @@ INSERT INTO [dbo].[Car]
                 <div style="background-color: darkgrey; padding: 20px; font-family: 'Garamond'">
                     <asp:DropDownList ID="ddlOptions" AppendDataBoundItems="true" runat="server" 
                         AutoPostBack="true" OnSelectedIndexChanged="ddlOptions_SelectedIndexChanged" 
-                        onchange="showTextbox()" class="form-select" style="width: auto; display: inline-block;">
+                        class="form-select" style="width: auto; display: inline-block;">
                         <asp:ListItem Text="Selected Option.." Value="0" />
                         <asp:ListItem Text="Model" Value="1" />
                         <asp:ListItem Text="Manufacture Name" Value="2" />
@@ -607,31 +605,29 @@ INSERT INTO [dbo].[Car]
                     <asp:Button ID="btnSearch" runat="server" class="btn btn-primary" Text="Search" OnClick="btnSearch_Click" />
                 </div>
                 <div class="mt-3">
-                    <asp:GridView runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" DataKeyNames="CarId" AllowSorting="True" ID="gvGridView" CssClass="table table-striped table-bordered">
+                    <asp:GridView runat="server" AutoGenerateColumns="False" DataKeyNames="CarId" AllowSorting="False" ID="gvGridView" CssClass="table table-striped table-bordered">
                         <Columns>
-                            <asp:BoundField DataField="CarId" HeaderText="CarId" ReadOnly="True" SortExpression="CarId" />
-                            <asp:BoundField DataField="ManufacturerId" HeaderText="ManufacturerId" SortExpression="ManufacturerId" />
-                            <asp:BoundField DataField="CarTypeId" HeaderText="CarTypeId" SortExpression="CarTypeId" />
-                            <asp:BoundField DataField="TransmissionTypeId" HeaderText="TransmissionTypeId" SortExpression="TransmissionTypeId" />
-                            <asp:BoundField DataField="ManufacturerName" HeaderText="ManufacturerName" SortExpression="ManufacturerName" />
-                            <asp:BoundField DataField="Model" HeaderText="Model" SortExpression="Model" />
-                            <asp:BoundField DataField="Type" HeaderText="Type" SortExpression="Type" />
-                            <asp:BoundField DataField="Engine" HeaderText="Engine" SortExpression="Engine" />
-                            <asp:BoundField DataField="BHP" HeaderText="BHP" SortExpression="BHP" />
-                            <asp:BoundField DataField="Transmission" HeaderText="Transmission" SortExpression="Transmission" />
-                            <asp:BoundField DataField="Mileage" HeaderText="Mileage" SortExpression="Mileage" />
-                            <asp:BoundField DataField="Seat" HeaderText="Seat" SortExpression="Seat" />
-                            <asp:BoundField DataField="AirBagDetails" HeaderText="AirBagDetails" SortExpression="AirBagDetails" />
-                            <asp:BoundField DataField="BootSpace" HeaderText="BootSpace" SortExpression="BootSpace" />
-                            <asp:BoundField DataField="Price" HeaderText="Price" SortExpression="Price" />
+                            <asp:BoundField DataField="CarId" HeaderText="CarId" ReadOnly="True" />
+                            <asp:BoundField DataField="ManufacturerId" HeaderText="ManufacturerId" />
+                            <asp:BoundField DataField="CarTypeId" HeaderText="CarTypeId" />
+                            <asp:BoundField DataField="TransmissionTypeId" HeaderText="TransmissionTypeId" />
+                            <asp:BoundField DataField="ManufacturerName" HeaderText="ManufacturerName" />
+                            <asp:BoundField DataField="Model" HeaderText="Model" />
+                            <asp:BoundField DataField="Type" HeaderText="Type" />
+                            <asp:BoundField DataField="Engine" HeaderText="Engine" />
+                            <asp:BoundField DataField="BHP" HeaderText="BHP" />
+                            <asp:BoundField DataField="Transmission" HeaderText="Transmission" />
+                            <asp:BoundField DataField="Mileage" HeaderText="Mileage" />
+                            <asp:BoundField DataField="Seat" HeaderText="Seat" />
+                            <asp:BoundField DataField="AirBagDetails" HeaderText="AirBagDetails" />
+                            <asp:BoundField DataField="BootSpace" HeaderText="BootSpace" />
+                            <asp:BoundField DataField="Price" HeaderText="Price" />
                         </Columns>
                     </asp:GridView>
                 </div>
             </div>
         </div>
     </div>
-
-    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:CIMSPROJECTConnectionString2 %>" SelectCommand="ListAllCars" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -643,7 +639,28 @@ INSERT INTO [dbo].[Car]
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#<%= gvGridView.ClientID %>').DataTable();
+            $('#<%= gvGridView.ClientID %>').DataTable({
+                "paging": true,
+                "searching": false,
+                "ordering": true,
+                "columns": [
+                    null,
+                    null,
+                    null,
+                    null,
+                    { "orderable": true }, // Enable sorting on ManufacturerName
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                ]
+            });
         });
 
         function showTextbox() {
@@ -651,13 +668,13 @@ INSERT INTO [dbo].[Car]
             var textbox = document.getElementById('<%= txtSearch.ClientID %>');
             if (dropdown.value !== "0") {
                 textbox.style.display = 'inline-block';
-            }
-            else {
+            } else {
                 textbox.style.display = 'none';
             }
         }
     </script>
 </asp:Content>
+    
 
 
 
