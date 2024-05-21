@@ -564,6 +564,100 @@ INSERT INTO [dbo].[Car]
            (4, 104, 204, 304, 'Chevrolet', 'Tahoe', 'SUV', 'V8', 355, 'Automatic', 15, 7, 'Driver, Passenger, Side', 1220, 50000.00),
            (5, 105, 205, 305, 'Tesla', 'Model S', 'Sedan', 'Electric', 762, 'Automatic', 102, 5, 'Driver, Passenger, Side', 804, 80000.00),
            (6, 106, 206, 306, 'BMW', 'X5', 'SUV', 'I6', 335, 'Automatic', 24, 5, 'Driver, Passenger, Side', 650, 60000.00),
-           (7, 107, 207, 307, 'Audi', 'A4', 'Sedan', 'I4', 252, 'Automatic', 27, 5, 'Driver, Passenger, Side', 480, 40000.00);
+           (7, 107, 207, 307, 'Audi', 'A4', 'Sedan', 'I4', 252, 'Automatic', 27, 5, 'Driver, Passenger, Side', 480, 40000.00)
+
+*------------------------------------
+
+<%@ Page Title="Customer Data" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="Customer.aspx.cs" Inherits="CarInfoMang.Customer" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-RX8tVZWlpIFXvsIUTzy1I1FbGlpDi9l0r6mVFTGOYsOUtHe+WmB+6o3Jz6S9krHb" crossorigin="anonymous">
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css" />
+
+    <style>
+        #btnSearch {
+            /* Add custom styles for the search button if needed */
+        }
+    </style>
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="cphOpenSideNav" runat="server">
+</asp:Content>
+
+<asp:Content ID="Content3" ContentPlaceHolderID="cphSideNav" runat="server">
+</asp:Content>
+
+<asp:Content ID="Content4" ContentPlaceHolderID="cphBody" runat="server">
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                <div style="background-color: darkgrey; padding: 20px; font-family: 'Garamond'">
+                    <asp:DropDownList ID="ddlOptions" AppendDataBoundItems="true" runat="server" 
+                        AutoPostBack="true" OnSelectedIndexChanged="ddlOptions_SelectedIndexChanged" 
+                        onchange="showTextbox()" class="form-select" style="width: auto; display: inline-block;">
+                        <asp:ListItem Text="Selected Option.." Value="0" />
+                        <asp:ListItem Text="Model" Value="1" />
+                        <asp:ListItem Text="Manufacture Name" Value="2" />
+                        <asp:ListItem Text="Type" Value="3" />
+                    </asp:DropDownList>
+                    <asp:TextBox ID="txtSearch" runat="server" class="form-control d-none" placeholder="Enter Search term." OnTextChanged="txtSearch_TextChanged" style="display:inline-block; width: auto;"></asp:TextBox>
+                    <asp:Button ID="btnSearch" runat="server" class="btn btn-primary" Text="Search" OnClick="btnSearch_Click" />
+                </div>
+                <div class="mt-3">
+                    <asp:GridView runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" DataKeyNames="CarId" AllowSorting="True" ID="gvGridView" CssClass="table table-striped table-bordered">
+                        <Columns>
+                            <asp:BoundField DataField="CarId" HeaderText="CarId" ReadOnly="True" SortExpression="CarId" />
+                            <asp:BoundField DataField="ManufacturerId" HeaderText="ManufacturerId" SortExpression="ManufacturerId" />
+                            <asp:BoundField DataField="CarTypeId" HeaderText="CarTypeId" SortExpression="CarTypeId" />
+                            <asp:BoundField DataField="TransmissionTypeId" HeaderText="TransmissionTypeId" SortExpression="TransmissionTypeId" />
+                            <asp:BoundField DataField="ManufacturerName" HeaderText="ManufacturerName" SortExpression="ManufacturerName" />
+                            <asp:BoundField DataField="Model" HeaderText="Model" SortExpression="Model" />
+                            <asp:BoundField DataField="Type" HeaderText="Type" SortExpression="Type" />
+                            <asp:BoundField DataField="Engine" HeaderText="Engine" SortExpression="Engine" />
+                            <asp:BoundField DataField="BHP" HeaderText="BHP" SortExpression="BHP" />
+                            <asp:BoundField DataField="Transmission" HeaderText="Transmission" SortExpression="Transmission" />
+                            <asp:BoundField DataField="Mileage" HeaderText="Mileage" SortExpression="Mileage" />
+                            <asp:BoundField DataField="Seat" HeaderText="Seat" SortExpression="Seat" />
+                            <asp:BoundField DataField="AirBagDetails" HeaderText="AirBagDetails" SortExpression="AirBagDetails" />
+                            <asp:BoundField DataField="BootSpace" HeaderText="BootSpace" SortExpression="BootSpace" />
+                            <asp:BoundField DataField="Price" HeaderText="Price" SortExpression="Price" />
+                        </Columns>
+                    </asp:GridView>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:CIMSPROJECTConnectionString2 %>" SelectCommand="ListAllCars" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-qptG4BRNaSK1rmDpZ++/xrFwAFGhgfsfZ9sx2PqnE/4yCTpyJffoDjjk+N5t9ggd" crossorigin="anonymous"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap5.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#<%= gvGridView.ClientID %>').DataTable();
+        });
+
+        function showTextbox() {
+            var dropdown = document.getElementById('<%= ddlOptions.ClientID %>');
+            var textbox = document.getElementById('<%= txtSearch.ClientID %>');
+            if (dropdown.value !== "0") {
+                textbox.style.display = 'inline-block';
+            }
+            else {
+                textbox.style.display = 'none';
+            }
+        }
+    </script>
+</asp:Content>
+
 
 
