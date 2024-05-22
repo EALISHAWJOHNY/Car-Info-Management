@@ -841,7 +841,56 @@ INSERT INTO [dbo].[Car]
 
 
 --------------------------------------------
+**UpdateAdminCarInfo**
 
+ALTER   PROCEDURE [dbo].[AdminUpdateCar](
+@CarId int,
+@ManufacturerId int,
+@CarTypeId int,
+@TransmissiontypeID int,
+@Model nvarchar(100),
+@Engine nvarchar(4),
+@BHP int,
+@Mileage int,
+@Seats int,
+@AirBagDetails nvarchar(255),
+@BootSpace int,
+@Price decimal(18,2),
+@result int output)
+AS 
+BEGIN
+	-- Declare a variable to hold the ManufacturerName
+				DECLARE @ManufacturerName nvarchar(100);
+				DECLARE @Transmission nvarchar(100);
+				DECLARE @CarType nvarchar(100);
+
+				-- Select the ManufacturerName from the Manufacturer table
+				SELECT @ManufacturerName = Name
+				FROM Manufacturer
+				WHERE Id = @ManufacturerId;
+
+				SELECT @Transmission = Type
+				FROM CarTransmissionType
+				WHERE Id = @TransmissiontypeID;
+
+				SELECT @CarType = Type
+				FROM CarType
+				WHERE Id = @CarTypeId;
+
+		IF EXISTS (Select 1 from [dbo].[Car] where CarId = @CarTypeId )
+			Begin			
+
+				-- Update the values into the Car table
+				Update Car Set ManufacturerId = @ManufacturerId, CarTypeId = @CarTypeId, TransmissiontypeID=@TransmissiontypeID, ManufacturerName =@ManufacturerName, Model=@Model, Type =@CarType, 
+					Engine = @Engine, BHP =@BHP, Transmission =@Transmission, Mileage = @Mileage, Seat =@Seats, AirBagDetails =@AirBagDetails, BootSpace =@BootSpace, Price =@Price
+					Set @result = 1
+			end
+		else
+		begin
+			set @result = 0
+		end
+	return @result
+END
 
 
 
