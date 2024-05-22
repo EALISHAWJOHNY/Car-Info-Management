@@ -914,21 +914,33 @@ END
 
 -----------------------------
 
- protected void ListCarInfo_RowCommand(object sender, GridViewCommandEventArgs e)
- {
-     if (e.CommandName == "EditRow")
-     {
-         Response.Redirect($"UpdateCarAdmin.aspx?CarId={e.CommandArgument}");
-     }
-     else
-     {
-         Response.Redirect($"AdminListCar.aspx?CarId = {e.CommandArgument}");
-         int carId = Convert.ToInt32(Request.QueryString["CarId"]);
-         int result = CarInformationMgmtSystemBAL.DeleteCarByIdBL(carId);
-         if (result == 1)
-         {
-             SuccessMessage.Text = "Deleted Successfully";
-         }
-     }
- }
+ <%@ Page Title="" Language="C#" MasterPageFile="~/MasterPageTemp.Master" AutoEventWireup="true" CodeBehind="AdminLogin.aspx.cs" Inherits="CarInfoManagement.AdminLogin" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="cphOpenSideNav" runat="server">
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="cphSideNav" runat="server">
+</asp:Content>
+<asp:Content ID="Content4" ContentPlaceHolderID="cphSideNavItems" runat="server">
+</asp:Content>
+<asp:Content ID="Content5" ContentPlaceHolderID="cphBody" runat="server">
+    <div class="wrapper fadeInDown">
+        <div id="formContent" style="margin-top: 30px;">
+            <!-- Login Form -->
+            <div style="margin-top: 70px;">
+                <asp:TextBox ID="Username" runat="server" CssClass="form-control" class="fadeIn second" placeholder="login" />
+                <asp:TextBox ID="Password" runat="server" CssClass="form-control" class="fadeIn first" TextMode="Password" placeholder="password" />
+                <asp:Button ID="button" runat="server" CssClass="btn btn-primary" Text="Login" class="fadeIn fourth" OnClick="button_Click" />
+            </div>
+            <div class="form-group">
+                <asp:Label ID="ErrorMessage" runat="server" Text="" ForeColor="Red"></asp:Label>
+            </div>
+        </div>
+    </div>
+</asp:Content>
+
 
