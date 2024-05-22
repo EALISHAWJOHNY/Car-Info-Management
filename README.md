@@ -912,5 +912,23 @@ BEGIN
 END
 
 
+-----------------------------
 
+ protected void ListCarInfo_RowCommand(object sender, GridViewCommandEventArgs e)
+ {
+     if (e.CommandName == "EditRow")
+     {
+         Response.Redirect($"UpdateCarAdmin.aspx?CarId={e.CommandArgument}");
+     }
+     else
+     {
+         Response.Redirect($"AdminListCar.aspx?CarId = {e.CommandArgument}");
+         int carId = Convert.ToInt32(Request.QueryString["CarId"]);
+         int result = CarInformationMgmtSystemBAL.DeleteCarByIdBL(carId);
+         if (result == 1)
+         {
+             SuccessMessage.Text = "Deleted Successfully";
+         }
+     }
+ }
 
