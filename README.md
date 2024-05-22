@@ -920,6 +920,41 @@ END
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+        .wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+        }
+        #formContent {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.1);
+        }
+        .fadeIn {
+            animation: fadeIn ease-in 1;
+        }
+        .fadeIn.second {
+            animation-delay: 0.2s;
+        }
+        .fadeIn.first {
+            animation-delay: 0.1s;
+        }
+        .fadeIn.fourth {
+            animation-delay: 0.4s;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cphOpenSideNav" runat="server">
 </asp:Content>
@@ -932,9 +967,9 @@ END
         <div id="formContent" style="margin-top: 30px;">
             <!-- Login Form -->
             <div style="margin-top: 70px;">
-                <asp:TextBox ID="Username" runat="server" CssClass="form-control" class="fadeIn second" placeholder="login" />
-                <asp:TextBox ID="Password" runat="server" CssClass="form-control" class="fadeIn first" TextMode="Password" placeholder="password" />
-                <asp:Button ID="button" runat="server" CssClass="btn btn-primary" Text="Login" class="fadeIn fourth" OnClick="button_Click" />
+                <asp:TextBox ID="Username" runat="server" CssClass="form-control fadeIn second" placeholder="login" />
+                <asp:TextBox ID="Password" runat="server" CssClass="form-control fadeIn first" TextMode="Password" placeholder="password" />
+                <asp:Button ID="button" runat="server" CssClass="btn btn-primary fadeIn fourth" Text="Login" OnClick="button_Click" />
             </div>
             <div class="form-group">
                 <asp:Label ID="ErrorMessage" runat="server" Text="" ForeColor="Red"></asp:Label>
