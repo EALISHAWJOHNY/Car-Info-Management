@@ -1146,3 +1146,115 @@ protected void CreateButton_Click(object sender, EventArgs e)
 
 }
 
+<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPageMenu.Master" AutoEventWireup="true" CodeBehind="AdminListCar.aspx.cs" Inherits="CarInfoManagement.AdminListCar" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="cphOpenSideNav" runat="server">
+    <span class="openbtn" onclick="openSideNav()">&#9776;</span>
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="cphSideNav" runat="server">
+    <nav id="sideNav" class="sidenav">
+        <a class="closebtn" style="padding: 5px;" onclick="closeSideNav();">&times;</a>
+         <ul class="navbar-nav">
+     <li class="nav-item dropdown">
+         <a class="nav-link" href="AdminListCar.aspx">Car Info</a>
+     </li>
+     <li class="nav-item dropdown">
+         <a class="nav-link" href="AdminCarInfoTransList.aspx">Car Transmission Types</a>
+     </li>
+     <li class="nav-item dropdown">
+         <a class="nav-link" href="AdminCarManufacturerTypeList.aspx">Car Manufacturer Types</a>
+
+     </li>
+     <li class="nav-item dropdown">
+         <a class="nav-link" href="AdminCarTypeList.aspx">Car Types</a>
+
+     </li>
+ </ul>
+    </nav>
+</asp:Content>
+<asp:Content ID="Content4" ContentPlaceHolderID="cphSideNavItems" runat="server">
+   
+</asp:Content>
+<asp:Content ID="Content5" ContentPlaceHolderID="cphBody" runat="server">
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="mt-3" id="actions">
+                    <div class="rowButtonAddNew">                       
+                        <div class="col-sm-12 text-right mb-3">
+                            <asp:LinkButton type="button" runat="server" commandName="AddCar" class="btn btn-info" OnClick="AddNew_Click"><i class="bi bi-plus"></i>AddNew</asp:LinkButton>                            
+                        </div>
+                        <div class="rowButtonAddNew">
+                             <asp:Label ID="SuccessMessage" runat="server" ForeColor="Green" CssClass="float-lg-end"></asp:Label>
+                        </div>
+                    </div>
+                    <asp:GridView CssClass="table table-striped" ID="gvCarList" runat="server" AutoGenerateColumns="False" OnRowCommand="ListCarInfo_RowCommand" DataKeyNames="CarId" DataSourceID="SqlDataSource1" OnSelectedIndexChanged="gvCarList_SelectedIndexChanged">
+                        <Columns>
+                            <asp:BoundField DataField="CarId" HeaderText="CarId" InsertVisible="False" ReadOnly="True" SortExpression="CarId" Visible="False" />
+                            <asp:BoundField DataField="ManufacturerId" HeaderText="ManufacturerId" SortExpression="ManufacturerId" Visible="False" />
+                            <asp:BoundField DataField="CarTypeId" HeaderText="CarTypeId" SortExpression="CarTypeId" Visible="False" />
+                            <asp:BoundField DataField="TransmissionTypeId" HeaderText="TransmissionTypeId" SortExpression="TransmissionTypeId" Visible="False" />
+                            <asp:BoundField DataField="ManufacturerName" HeaderText="ManufacturerName" SortExpression="ManufacturerName" />
+                            <asp:BoundField DataField="Model" HeaderText="Model" SortExpression="Model" />
+                            <asp:BoundField DataField="Type" HeaderText="Type" SortExpression="Type" />
+                            <asp:BoundField DataField="Engine" HeaderText="Engine" SortExpression="Engine" />
+                            <asp:BoundField DataField="BHP" HeaderText="BHP" SortExpression="BHP" />
+                            <asp:BoundField DataField="Transmission" HeaderText="Transmission" SortExpression="Transmission" />
+                            <asp:BoundField DataField="Mileage" HeaderText="Mileage" SortExpression="Mileage" />
+                            <asp:BoundField DataField="Seat" HeaderText="Seat" SortExpression="Seat" />
+                            <asp:BoundField DataField="AirBagDetails" HeaderText="AirBagDetails" SortExpression="AirBagDetails" />
+                            <asp:BoundField DataField="BootSpace" HeaderText="BootSpace" SortExpression="BootSpace" />
+                            <asp:BoundField DataField="Price" HeaderText="Price" SortExpression="Price" />
+                            <asp:TemplateField HeaderText="Actions">
+                                <ItemTemplate>
+                                    <asp:Button CssClass="btn btn-primary" ID="editBtn" runat="server" Text="Edit" CommandName="EditRow" CommandArgument='<%# Eval("CarId") %>' />
+                                    <asp:Button CssClass="btn btn-primary" ID="deleteBtn" runat="server" Text="Delete" CommandName="DeleteRow" CommandArgument='<%# Eval("CarId") %>' />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                    </asp:GridView>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-qptG4BRNaSK1rmDpZ++/xrFwAFGhgfsfZ9sx2PqnE/4yCTpyJffoDjjk+N5t9ggd" crossorigin="anonymous"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap5.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#<%= gvCarList.ClientID %>').DataTable({
+                "paging": true,
+                "searching": false,
+                "ordering": true,
+                "columns": [
+                    null,
+                    null,
+                    null,
+                    null,
+                    { "orderable": true }, // Enable sorting on ManufacturerName
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                ]
+            });
+        });
+    </script>
+    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:Car_ManagementConnectionString2 %>" SelectCommand="AdminListCar" SelectCommandType="StoredProcedure" OnSelecting="SqlDataSource1_Selecting"></asp:SqlDataSource>
+</asp:Content>
+
