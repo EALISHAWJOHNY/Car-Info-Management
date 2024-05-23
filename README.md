@@ -1327,3 +1327,80 @@ BEGIN
         -- ERROR_MESSAGE(), ERROR_SEVERITY(), ERROR_STATE() can be used to log the error
     END CATCH
 END
+
+// CarRepository.cs
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+
+public class CarRepository
+{
+    private string connectionString = "Your_Connection_String_Here";
+
+    public DataTable GetCarDetailsByName(string manufacturerName)
+    {
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            connection.Open();
+            using (SqlCommand command = new SqlCommand("SearchCarDetailsByName", connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@ManufacturerName", manufacturerName);
+                using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                {
+                    DataTable carDetails = new DataTable();
+                    adapter.Fill(carDetails);
+                    return carDetails;
+                }
+            }
+        }
+    }
+}
+// CarService.cs
+using System.Data;
+
+public class CarService
+{
+    private CarRepository carRepository;
+
+    public CarService()
+    {
+        carRepository = new CarRepository();
+    }
+
+    public DataTable GetCarDetailsByName(string manufacturerName)
+    {
+        return carRepository.GetCarDetailsByName(manufacturerName);
+    }
+}
+
+// YourPage.aspx.cs
+using System;
+using System.Data;
+using System.Web.UI.WebControls;
+
+public partial class YourPage : System.Web.UI.Page
+{
+    private CarService carService;
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        carService = new CarService();
+    }
+
+    protected void SearchButton_Click(object sender, EventArgs e)
+    {
+        string manufacturerName = ManufacturerTextBox.Text.Trim();
+        DataTable carDetails = carService.GetCarDetailsByName(manufacturerName);
+        DisplayCarDetails(carDetails);
+    }
+
+    private void DisplayCarDetails(DataTable carDetails)
+    {
+        // Bind carDetails DataTable to your UI controls (e.g., GridView)
+        YourGridView.DataSource = carDetails;
+        YourGridView.DataBind();
+    }
+}
+
