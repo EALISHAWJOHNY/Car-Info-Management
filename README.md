@@ -1058,5 +1058,42 @@ END
 
 </asp:Content>
 
+ protected void DisplayCarTransmissionType()
+ {
+     SqlConnection objCon = new SqlConnection("server=(localdb)\\local; database=Car_Management; integrated security=true");
+     SqlCommand objCom = new SqlCommand("Select Type,Id from CarTransmissionType ", objCon); //here we are using stored procedure craeted in db 
+     /*objCom.CommandType = CommandType;*/ //mentioning command type is a stored procedure
+     objCon.Open();
+     SqlDataReader objDRSearch = objCom.ExecuteReader();
+     DataTable objDT = new DataTable();
+     objDT.Load(objDRSearch);
+     objCon.Close();
+     ddlTransmissionTypeId.DataSource = objDT.DefaultView; //it returns the table as it is 
+     ddlTransmissionTypeId.DataTextField = "Type";
+     ddlTransmissionTypeId.DataValueField = "Id";
+     ddlTransmissionTypeId.DataBind();
+ }
+ public Manufacturer DisplayCarType()
+{
+    SqlConnection objCon = new SqlConnection("server=(localdb)\\local; database=Car_Management; integrated security=true");
+    SqlCommand objCom = new SqlCommand("p_allgetCarType ", objCon); //here we are using stored procedure craeted in db 
+    /*objCom.CommandType = CommandType;*/ //mentioning command type is a stored procedure
+    objCon.Open();
+    SqlDataReader objDRSearch = objCom.ExecuteReader();
+
+    DataTable objDT = new DataTable();
+    objDT.Load(objDRSearch);
+    objCon.Close();
+    DataRow dr = objDT.Rows[10];
+    Manufacturer manufacturer = new Manufacturer
+    {
+        Id = Convert.ToInt32(dr[0]),
+        Name = dr[1].ToString(),
+        ContactNumber = dr[2].ToString(),
+        RegisteredOffice = dr[3].ToString()
+
+    };
+    return manufacturer;
+}
 
 
