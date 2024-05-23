@@ -1280,3 +1280,50 @@ begin
 set @result=0;
 end
 end
+
+
+ALTER PROCEDURE [dbo].[DeleteManufacturer]
+@Id int,
+@result int output
+AS 
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        -- Start a transaction
+        BEGIN TRANSACTION;
+
+        -- Delete from CarInfo table where ManufacturerId matches
+        DELETE FROM CarInfo
+        WHERE ManufacturerId = @Id;
+
+        -- Delete from Manufacturer table where Id matches
+        DELETE FROM Manufacturer
+        WHERE Id = @Id;
+
+        -- Check if the manufacturer was successfully deleted
+        IF @@ROWCOUNT > 0
+        BEGIN
+            -- Commit the transaction
+            COMMIT TRANSACTION;
+            -- Set the result to 1 indicating success
+            SET @result = 1;
+        END
+        ELSE
+        BEGIN
+            -- Rollback the transaction
+            ROLLBACK TRANSACTION;
+            -- Set the result to 0 indicating failure (no rows affected)
+            SET @result = 0;
+        END
+    END TRY
+    BEGIN CATCH
+        -- Rollback the transaction in case of an error
+        ROLLBACK TRANSACTION;
+        -- Set the result to 0 indicating failure
+        SET @result = 0;
+
+        -- Optionally, you can log the error or rethrow the error
+        -- ERROR_MESSAGE(), ERROR_SEVERITY(), ERROR_STATE() can be used to log the error
+    END CATCH
+END
