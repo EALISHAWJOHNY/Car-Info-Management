@@ -1073,23 +1073,34 @@ END
      ddlTransmissionTypeId.DataValueField = "Id";
      ddlTransmissionTypeId.DataBind();
  }
-public CarType DisplayCarType()
+public List<CarType> DisplayCarType()
 {
-    SqlConnection objCon = new SqlConnection("server=(localdb)\\local; database=Car_Management; integrated security=true");
-    SqlCommand objCom = new SqlCommand("p_allgetCarType ", objCon); //here we are using stored procedure craeted in db 
-    /*objCom.CommandType = CommandType;*/ //mentioning command type is a stored procedure
-    objCon.Open();
-    SqlDataReader objDRSearch = objCom.ExecuteReader();
-
-    DataTable objDT = new DataTable();
-    objDT.Load(objDRSearch);
-    CarType carType = new CarType
+    List<CarType> carTypes = new List<CarType>();
+    using (SqlConnection objCon = new SqlConnection("server=(localdb)\\local; database=Car_Management; integrated security=true"))
     {
-        Id = Convert.ToInt32(objDRSearch["Id"]),
-        Type = objDRSearch["Type"].ToString()
-    };
-    objCon.Close();            
-    
-    return carType;
+        using (SqlCommand objCom = new SqlCommand("p_allgetCarType", objCon))
+        {
+            objCom.CommandType = CommandType.StoredProcedure; // Set the command type to stored procedure
+            objCon.Open();
+            using (SqlDataReader objDRSearch = objCom.ExecuteReader())
+            {
+                DataTable objDT = new DataTable();
+                objDT.Load(objDRSearch);
+                objCon.Close();
+                
+                foreach (DataRow row in objDT.Rows)
+                {
+                    CarType carType = new CarType
+                    {
+                        Id = Convert.ToInt32(row["Id"]),
+                        Type = row["Type"].ToString()
+                    };
+                    carTypes.Add(carType);
+                }
+            }
+        }
+    }
+    return carTypes;
 }
+
 
