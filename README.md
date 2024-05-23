@@ -1073,7 +1073,7 @@ END
      ddlTransmissionTypeId.DataValueField = "Id";
      ddlTransmissionTypeId.DataBind();
  }
- public Manufacturer DisplayCarType()
+public CarType DisplayCarType()
 {
     SqlConnection objCon = new SqlConnection("server=(localdb)\\local; database=Car_Management; integrated security=true");
     SqlCommand objCom = new SqlCommand("p_allgetCarType ", objCon); //here we are using stored procedure craeted in db 
@@ -1083,17 +1083,13 @@ END
 
     DataTable objDT = new DataTable();
     objDT.Load(objDRSearch);
-    objCon.Close();
-    DataRow dr = objDT.Rows[10];
-    Manufacturer manufacturer = new Manufacturer
+    CarType carType = new CarType
     {
-        Id = Convert.ToInt32(dr[0]),
-        Name = dr[1].ToString(),
-        ContactNumber = dr[2].ToString(),
-        RegisteredOffice = dr[3].ToString()
-
+        Id = Convert.ToInt32(objDRSearch["Id"]),
+        Type = objDRSearch["Type"].ToString()
     };
-    return manufacturer;
+    objCon.Close();            
+    
+    return carType;
 }
-
 
