@@ -1260,3 +1260,23 @@ protected void CreateButton_Click(object sender, EventArgs e)
     </script>
     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:Car_ManagementConnectionString2 %>" SelectCommand="AdminListCar" SelectCommandType="StoredProcedure" OnSelecting="SqlDataSource1_Selecting"></asp:SqlDataSource>
 </asp:Content>
+
+ALTER PROCEDURE [dbo].[DeleteManufacturer]
+@Id int,
+@result int output
+AS 
+BEGIN
+if exists( select 1 from Manufacturer where Id= @Id)
+begin
+	Delete From CarInfo
+	where [ManufacturerId]= @Id;
+    DELETE FROM Manufacturer
+    WHERE Id = @Id
+ 
+set @result=1;
+end
+else
+begin
+set @result=0;
+end
+end
