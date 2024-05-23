@@ -1103,4 +1103,46 @@ public List<CarType> DisplayCarType()
     return carTypes;
 }
 
+protected void CreateButton_Click(object sender, EventArgs e)
+{
+    try
+    {
+        carobj.ManufacturerId = Convert.ToInt32(ddlManufactureId.SelectedValue);
+        carobj.transmissiontypeId = Convert.ToInt32(ddlTransmissionTypeId.SelectedValue);
+        carobj.carTypeId = Convert.ToInt32(ddlTypeId.SelectedValue);
+        Car obj = new Car
+        {
+            manufacturerId = carobj.ManufacturerId,
+            carTypeId = carobj.carTypeId,
+            transmissiontypeId = carobj.transmissiontypeId,
+            airBagDetails = carobj.airBagDetails,
+            model = carobj.model,
+            CarTypeId = carobj.carTypeId,
+            engine = carobj.engine,
+            bhp = carobj.bhp,
+            TransmissiontypeId = carobj.transmissiontypeId,
+            mileage = carobj.mileage,
+            seat = carobj.seat,
+            AirBagDetails = carobj.airBagDetails,
+            bootSpace = carobj.bootSpace,
+            price = carobj.price
+        };
+        int resultfrombl = CarInformationMgmtSystemBAL.addCarAdminBAL(obj);
+        if (resultfrombl == 1)
+        {
+            Session["SuccessMessage"] = "Car Info Added SuccesFully";
+            Response.Redirect("CreateCarInfoAdmin.aspx");
+        }
+        else
+        {
+            Session["ErrorMessage"] = "Car Info failed to Add";
+            Response.Redirect("AdminListCar.aspx");
+        }
+    }
+    catch (Exception ex)
+    {
+        Response.Redirect("ExceptionHandlingPage.aspx");
+    }
+
+}
 
