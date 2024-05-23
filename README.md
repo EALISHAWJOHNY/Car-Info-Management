@@ -1145,7 +1145,6 @@ protected void CreateButton_Click(object sender, EventArgs e)
     }
 
 }
-
 <%@ Page Title="" Language="C#" MasterPageFile="~/MasterPageMenu.Master" AutoEventWireup="true" CodeBehind="AdminListCar.aspx.cs" Inherits="CarInfoManagement.AdminListCar" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -1156,39 +1155,44 @@ protected void CreateButton_Click(object sender, EventArgs e)
 <asp:Content ID="Content3" ContentPlaceHolderID="cphSideNav" runat="server">
     <nav id="sideNav" class="sidenav">
         <a class="closebtn" style="padding: 5px;" onclick="closeSideNav();">&times;</a>
-         <ul class="navbar-nav">
-     <li class="nav-item dropdown">
-         <a class="nav-link" href="AdminListCar.aspx">Car Info</a>
-     </li>
-     <li class="nav-item dropdown">
-         <a class="nav-link" href="AdminCarInfoTransList.aspx">Car Transmission Types</a>
-     </li>
-     <li class="nav-item dropdown">
-         <a class="nav-link" href="AdminCarManufacturerTypeList.aspx">Car Manufacturer Types</a>
-
-     </li>
-     <li class="nav-item dropdown">
-         <a class="nav-link" href="AdminCarTypeList.aspx">Car Types</a>
-
-     </li>
- </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link" href="AdminListCar.aspx">Car Info</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link" href="AdminCarInfoTransList.aspx">Car Transmission Types</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link" href="AdminCarManufacturerTypeList.aspx">Car Manufacturer Types</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link" href="AdminCarTypeList.aspx">Car Types</a>
+            </li>
+        </ul>
     </nav>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="cphSideNavItems" runat="server">
-   
 </asp:Content>
 <asp:Content ID="Content5" ContentPlaceHolderID="cphBody" runat="server">
     <div class="container mt-4">
         <div class="row">
             <div class="col-12">
                 <div class="mt-3" id="actions">
-                    <div class="rowButtonAddNew">                       
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <asp:TextBox ID="txtSearch" runat="server" CssClass="form-control mb-3" placeholder="Search"></asp:TextBox>
+                        </div>
+                        <div class="col-sm-6 text-right mb-3">
+                            <asp:LinkButton type="button" runat="server" CommandName="AddCar" class="btn btn-info" OnClick="AddNew_Click"><i class="bi bi-plus"></i> Add New</asp:LinkButton>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-sm-12 text-right mb-3">
-                            <asp:LinkButton type="button" runat="server" commandName="AddCar" class="btn btn-info" OnClick="AddNew_Click"><i class="bi bi-plus"></i>AddNew</asp:LinkButton>                            
+                            <asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btn btn-primary" OnClick="btnSearch_Click" />
                         </div>
-                        <div class="rowButtonAddNew">
-                             <asp:Label ID="SuccessMessage" runat="server" ForeColor="Green" CssClass="float-lg-end"></asp:Label>
-                        </div>
+                    </div>
+                    <div class="row">
+                        <asp:Label ID="SuccessMessage" runat="server" ForeColor="Green" CssClass="float-lg-end"></asp:Label>
                     </div>
                     <asp:GridView CssClass="table table-striped" ID="gvCarList" runat="server" AutoGenerateColumns="False" OnRowCommand="ListCarInfo_RowCommand" DataKeyNames="CarId" DataSourceID="SqlDataSource1" OnSelectedIndexChanged="gvCarList_SelectedIndexChanged">
                         <Columns>
@@ -1215,7 +1219,6 @@ protected void CreateButton_Click(object sender, EventArgs e)
                             </asp:TemplateField>
                         </Columns>
                     </asp:GridView>
-                    
                 </div>
             </div>
         </div>
@@ -1257,4 +1260,3 @@ protected void CreateButton_Click(object sender, EventArgs e)
     </script>
     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:Car_ManagementConnectionString2 %>" SelectCommand="AdminListCar" SelectCommandType="StoredProcedure" OnSelecting="SqlDataSource1_Selecting"></asp:SqlDataSource>
 </asp:Content>
-
