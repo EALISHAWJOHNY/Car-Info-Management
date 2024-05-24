@@ -1412,3 +1412,29 @@ System.InvalidOperationException
    at CarInfoManagement.AdminListCar.DisplayCarDetails(DataTable carDetails) in C:\src\Projects\Car_Info_Management\CarInfoManagement\CarInfoManagement\AdminListCar.aspx.cs:line 115
    at CarInfoManagement.AdminListCar.btnSearch_Click(Object sender, EventArgs e) in C:\src\Projects\Car_Info_Management\CarInfoManagement\CarInfoManagement\AdminListCar.aspx.cs:line 109
 
+
+<asp:GridView CssClass="table table-striped" ID="gvCarList" runat="server" AutoGenerateColumns="False" OnRowCommand="ListCarInfo_RowCommand" DataKeyNames="CarId" DataSourceID="SqlDataSource1" OnSelectedIndexChanged="gvCarList_SelectedIndexChanged">
+    <Columns>
+        <asp:BoundField DataField="CarId" HeaderText="CarId" InsertVisible="False" ReadOnly="True" SortExpression="CarId" Visible="False" />
+        <asp:BoundField DataField="ManufacturerId" HeaderText="ManufacturerId" SortExpression="ManufacturerId" Visible="False" />
+        <asp:BoundField DataField="CarTypeId" HeaderText="CarTypeId" SortExpression="CarTypeId" Visible="False" />
+        <asp:BoundField DataField="TransmissionTypeId" HeaderText="TransmissionTypeId" SortExpression="TransmissionTypeId" Visible="False" />
+        <asp:BoundField DataField="ManufacturerName" HeaderText="ManufacturerName" SortExpression="ManufacturerName" />
+        <asp:BoundField DataField="Model" HeaderText="Model" SortExpression="Model" />
+        <asp:BoundField DataField="Type" HeaderText="Type" SortExpression="Type" />
+        <asp:BoundField DataField="Engine" HeaderText="Engine" SortExpression="Engine" />
+        <asp:BoundField DataField="BHP" HeaderText="BHP" SortExpression="BHP" />
+        <asp:BoundField DataField="Transmission" HeaderText="Transmission" SortExpression="Transmission" />
+        <asp:BoundField DataField="Mileage" HeaderText="Mileage" SortExpression="Mileage" />
+        <asp:BoundField DataField="Seat" HeaderText="Seat" SortExpression="Seat" />
+        <asp:BoundField DataField="AirBagDetails" HeaderText="AirBagDetails" SortExpression="AirBagDetails" />
+        <asp:BoundField DataField="BootSpace" HeaderText="BootSpace" SortExpression="BootSpace" />
+        <asp:BoundField DataField="Price" HeaderText="Price" SortExpression="Price" />
+        <asp:TemplateField HeaderText="Actions">
+            <ItemTemplate>
+                <asp:Button CssClass="btn btn-primary" ID="editBtn" runat="server" Text="Edit" CommandName="EditRow" CommandArgument='<%# Eval("CarId") %>' />
+                <asp:Button CssClass="btn btn-primary" ID="deleteBtn" runat="server" Text="Delete" CommandName="DeleteRow" CommandArgument='<%# Eval("CarId") %>' />
+            </ItemTemplate>
+        </asp:TemplateField>
+    </Columns>
+</asp:GridView>
